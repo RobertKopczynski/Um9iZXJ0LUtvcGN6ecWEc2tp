@@ -23,25 +23,6 @@ func InitDB() {
         " (url_id INTEGER,response TEXT, duration REAL, created_at TEXT)")
     statement.Exec()
 }
-func testInsert(){
-    _,err:=database.Exec("INSERT INTO url (url_id,url,interval) VALUES (?,?,?)",1,`httpbin.org/range/50`,60)
-    if err != nil{
-        fmt.Println("db url insert oops:",err)
-    }
-    _,err=database.Exec("INSERT INTO url (url_id,url,interval) VALUES (?,?,?)",2,`httpbin.org/range/40`,60)
-}
-func TestInsertResponse(url_id int){
-    _,err:=database.Exec("INSERT INTO response (url_id,response,duration,created_at)"+
-                         "VALUES (?,?,?,?)",url_id,"it was triumph",0.571,1559034638.31525)
-    if err!= nil{
-        fmt.Println("db response insert error for:",url_id)
-    }
-    _,err=database.Exec("INSERT INTO response (url_id,response,duration,created_at)"+
-                        "VALUES (?,?,?,?)",url_id,"",5,1559034938.623)
-    if err!= nil{
-        fmt.Println("db response insert error for:",url_id)
-    }
-}
 
 func InsertUrl(data Url, withoutId bool) (int,error) {
     if withoutId {
