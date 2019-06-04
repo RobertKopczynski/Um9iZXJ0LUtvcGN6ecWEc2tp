@@ -5,7 +5,7 @@ import (
  "fmt"
  _ "github.com/mattn/go-sqlite3"
 )
-var database,_ = sql.Open("sqlite3", "./test.db")
+var database,_ = sql.Open("sqlite3", "/tmp/test.db")
 
 type Url struct {
     Id int
@@ -20,8 +20,7 @@ func InitDB() {
     statement.Exec()
     statement, _ = database.Prepare(
         "CREATE TABLE IF NOT EXISTS response"+
-        " (url_id INTEGER,response TEXT, duration REAL, created_at TEXT)") //+
-        //"CONSTRAINT fk_url FOREIGN KEY (url_id) REFERENCES url(url_id)"))
+        " (url_id INTEGER,response TEXT, duration REAL, created_at TEXT)")
     statement.Exec()
 }
 func testInsert(){
@@ -126,17 +125,3 @@ func InsertResponse(data Response, url_id int){
     database.Exec("INSERT INTO response (url_id,response,duration,created_at)"+
                          "VALUES (?,?,?,CURRENT_TIMESTAMP)",url_id,data.Response,data.Duration)
 }
-/*
-func main(){
- InitDB()
- x:=SelectAllUrls()
- for _,value := range x{
- 	fmt.Println(value.id,value.url,value.interval)
- }
- y:=SelectHistory(1)
- for _,value := range y{
-	fmt.Println(value.response,value.duration, value.created_at)
- }
- database.Close()
-}
-*/
