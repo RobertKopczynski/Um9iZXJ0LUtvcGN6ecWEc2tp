@@ -67,7 +67,7 @@ func UrlCreate(w http.ResponseWriter, r *http.Request){
                 client := http.Client{
                     Timeout: timeout,
                 }
-                for {//TODO: implement a check with database to see if url is still there and the same?
+                for {
                     start:=time.Now()
                     resp,_:=client.Get(data.Url)
                     body,_:=ioutil.ReadAll(resp.Body)
