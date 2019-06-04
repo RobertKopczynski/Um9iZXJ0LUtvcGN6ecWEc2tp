@@ -1,14 +1,13 @@
 package main
 
 import (
-	"net/http"
-	"encoding/json"
-	"github.com/go-chi/chi"
+    "net/http"
+    "encoding/json"
+    "github.com/go-chi/chi"
     "strconv"
     "io/ioutil"
-    //"fmt"
-	"db"
-	"time"
+    "github.com/RobertKopczynski/Um9iZXJ0LUtvcGN6ecWEc2tp/db"
+    "time"
 )
 
 var MaxFileSize int64 = 1024*1024
@@ -36,7 +35,7 @@ func main() {
 
 func UrlList(w http.ResponseWriter, r *http.Request){
     data:=db.SelectAllUrls()
-    response,_:=json.Marshal(data)
+    response,_:=json.MarshalIndent(data,"","    ")
     w.Header().Set("Content-Type","application/json")
     w.WriteHeader(200)
     w.Write(response)
@@ -78,7 +77,7 @@ func UrlCreate(w http.ResponseWriter, r *http.Request){
                     time.Sleep(time.Duration(data.Interval)*time.Second)
                 }
     }()
-    response,_:=json.Marshal(returnId{id})
+    response,_:=json.MarshalIndent(returnId{id},"","    ")
     w.Header().Set("Content-Type","application/json")
     w.WriteHeader(200)
     w.Write(response)
